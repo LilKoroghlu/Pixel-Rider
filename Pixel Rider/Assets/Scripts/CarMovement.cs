@@ -10,7 +10,7 @@ public class CarMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = -5f;
+        speed = -12f;
         rb = GetComponent<Rigidbody2D>();
     }
 
