@@ -6,7 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     Vector2 screenBounds;
-    // Start is called before the first frame update
+    [SerializeField]
+    AudioSource still;
+    [SerializeField]
+    AudioSource brake;
+    [SerializeField]
+    AudioSource gas;
     [SerializeField]
     Transform top, bottom, middleTop, middleBottom;
     int positionIndex = 0;
@@ -20,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //  Horizontal Boundary
         if (transform.position.x <= screenBounds.x * -1)
         {
@@ -32,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //  Player Movement
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && rb.bodyType != RigidbodyType2D.Static)
         {
             if (positionIndex == 0)
             {
@@ -50,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, top.position.y, gameObject.transform.position.z);
             }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && rb.bodyType != RigidbodyType2D.Static)
         {
             if (positionIndex == 1)
             {
@@ -69,6 +73,24 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         float dirX = Input.GetAxisRaw("Horizontal");
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            still.Stop();
+            gas.Stop();
+            brake.Play();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            still.Stop();
+            brake.Stop();
+            gas.Play();
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            brake.Stop();
+            gas.Stop();
+            still.Play();
+        }
         if (rb.bodyType != RigidbodyType2D.Static)
             rb.velocity = new Vector2(dirX * 4f, rb.velocity.y);
     }
