@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCrash : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerCrash : MonoBehaviour
         {
             rb.bodyType = RigidbodyType2D.Static;
             anim.SetTrigger("crash");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
     }
