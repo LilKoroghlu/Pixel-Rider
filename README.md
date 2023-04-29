@@ -5,3 +5,4 @@
 
 <h3>NOTE</h3>
 <p><i>All these assets belongs to me including pixel art and music</i></p>
+<p><strong>Project is still on development</strong></p>
