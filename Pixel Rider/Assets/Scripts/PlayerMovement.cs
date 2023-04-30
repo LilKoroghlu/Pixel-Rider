@@ -12,12 +12,20 @@ public class PlayerMovement : MonoBehaviour
     AudioSource brake;
     [SerializeField]
     AudioSource gas;
+
     [SerializeField]
-    Transform top, bottom, middleTop, middleBottom;
-    int positionIndex = 0;
+    Transform top, bottom, middle, middleTop, middleBottom;
+
+    List<Transform> ways = new List<Transform>();
+    int positionIndex = 2;
     void Start()
     {
-        gameObject.transform.position = bottom.position;
+        ways.Add(bottom);
+        ways.Add(middleBottom);
+        ways.Add(middle);
+        ways.Add(middleTop);
+        ways.Add(top);
+        gameObject.transform.position = middle.position;
         rb = GetComponent<Rigidbody2D>();
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
@@ -36,43 +44,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //  Player Movement
-        if (Input.GetKeyDown(KeyCode.UpArrow) && rb.bodyType != RigidbodyType2D.Static)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && rb.bodyType != RigidbodyType2D.Static && positionIndex != ways.Count - 1)
         {
-            if (positionIndex == 0)
-            {
-                positionIndex++;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, middleBottom.position.y, gameObject.transform.position.z);
-            }
-            else if (positionIndex == 1)
-            {
-                positionIndex++;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, middleTop.position.y, gameObject.transform.position.z);
-            }
-            else if (positionIndex == 2)
-            {
-                positionIndex++;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, top.position.y, gameObject.transform.position.z);
-            }
+            positionIndex++;
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, ways[positionIndex].position.y, gameObject.transform.position.z);
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && rb.bodyType != RigidbodyType2D.Static)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && rb.bodyType != RigidbodyType2D.Static && positionIndex != 0)
         {
-            if (positionIndex == 1)
-            {
-                positionIndex--;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, bottom.position.y, gameObject.transform.position.z);
-            }
-            else if (positionIndex == 2)
-            {
-                positionIndex--;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, middleBottom.position.y, gameObject.transform.position.z);
-            }
-            else if (positionIndex == 3)
-            {
-                positionIndex--;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, middleTop.position.y, gameObject.transform.position.z);
-            }
+            positionIndex--;
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, ways[positionIndex].position.y, gameObject.transform.position.z);
         }
+
         float dirX = Input.GetAxisRaw("Horizontal");
+
+        // Sounds
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             still.Stop();
@@ -91,12 +76,8 @@ public class PlayerMovement : MonoBehaviour
             gas.Stop();
             still.Play();
         }
-        if (rb.bodyType != RigidbodyType2D.Static)
-            rb.velocity = new Vector2(dirX * 4f, rb.velocity.y);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
 
+        if (rb.bodyType != RigidbodyType2D.Static) rb.velocity = new Vector2(dirX * 4f, rb.velocity.y);
     }
 
 }
