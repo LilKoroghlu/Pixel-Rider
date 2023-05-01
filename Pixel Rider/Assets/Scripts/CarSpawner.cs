@@ -14,6 +14,7 @@ public class CarSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         StartCoroutine(SpawnCars());
     }
 
@@ -21,7 +22,7 @@ public class CarSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
+            yield return new WaitForSeconds(Random.Range(1, 3));
             randomIndex = Random.Range(0, carReference.Length);
             randomPos = Random.Range(0, 5);
             spawnedCar = Instantiate(carReference[randomIndex]);

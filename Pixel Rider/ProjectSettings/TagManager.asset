@@ -45,6 +45,12 @@ TagManager:
   - name: Road
     uniqueID: 3082198155
     locked: 0
+  - name: Stone
+    uniqueID: 2093806097
+    locked: 0
+  - name: Grass
+    uniqueID: 3588598545
+    locked: 0
   - name: Car
     uniqueID: 2187481393
     locked: 0

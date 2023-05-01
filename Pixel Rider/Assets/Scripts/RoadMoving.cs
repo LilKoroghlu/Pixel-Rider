@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class RoadMoving : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
         Vector2 pos = transform.position;
-        pos.x = pos.x - 10 * Time.deltaTime;
-        if (pos.x <= -50)
-            pos.x = 0;
+        float dirX = Input.GetAxisRaw("Horizontal");
+        if (dirX > 0f) pos.x = pos.x - 12 * Time.deltaTime;
+        else if (dirX < 0f) pos.x = pos.x - 8 * Time.deltaTime;
+        else pos.x = pos.x - 10 * Time.deltaTime;
+        if (pos.x <= -50) pos.x = 0;
         transform.position = pos;
     }
 }

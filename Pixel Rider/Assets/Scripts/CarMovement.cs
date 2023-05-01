@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    [HideInInspector]
-    public float speed;
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        speed = -12f;
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rb.bodyType != RigidbodyType2D.Static)
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+        float dirX = Input.GetAxisRaw("Horizontal");
+        if (rb.bodyType != RigidbodyType2D.Static && dirX > 0f) rb.velocity = new Vector2(-17f, rb.velocity.y);
+        else if (rb.bodyType != RigidbodyType2D.Static && dirX < 0f) rb.velocity = new Vector2(-15f, rb.velocity.y);
+        else if (rb.bodyType != RigidbodyType2D.Static && dirX == 0f) rb.velocity = new Vector2(-15f, rb.velocity.y);
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

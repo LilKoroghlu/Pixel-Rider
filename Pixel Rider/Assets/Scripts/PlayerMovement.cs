@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     List<Transform> ways = new List<Transform>();
     int positionIndex = 2;
+
     void Start()
     {
         ways.Add(bottom);
