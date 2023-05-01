@@ -45,12 +45,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //  Player Movement
-        if (Input.GetKeyDown(KeyCode.UpArrow) && rb.bodyType != RigidbodyType2D.Static && positionIndex != ways.Count - 1)
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && rb.bodyType != RigidbodyType2D.Static && positionIndex != ways.Count - 1)
         {
             positionIndex++;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x, ways[positionIndex].position.y, gameObject.transform.position.z);
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && rb.bodyType != RigidbodyType2D.Static && positionIndex != 0)
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) && rb.bodyType != RigidbodyType2D.Static && positionIndex != 0)
         {
             positionIndex--;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x, ways[positionIndex].position.y, gameObject.transform.position.z);
